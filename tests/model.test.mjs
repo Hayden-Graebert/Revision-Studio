@@ -44,9 +44,9 @@ test('chart uses earned marks / available marks for 30 calendar days and subject
  assert.deepEqual(performance(s,a=>a.subjectId==='maths',new Date('2026-10-10T12:00:00Z')),{count:2,percent:80});
  assert.equal(performance(s,a=>a.subjectId==='physics').percent,null);
 });
-test('only permitted Further Maths pairs are accepted',()=>{
- for(const p of [[],['FM1','FS1'],['FP1','FP2'],['D2','D1']])assert.ok(validOptions(p));
- for(const p of [['FM1'],['FM1','FS2'],['FM1','FM1'],['X1','Y1'],['FP1','FS1','FM1']])assert.equal(validOptions(p),false);
+test('revision module selection accepts any unique supported modules',()=>{
+ for(const p of [[],['FM1'],['FM1','FS2'],['FM1','FM2','FS1','FS2'],['FP1','FS1','FM1'],['FM1','FS1'],['FP1','FP2'],['D2','D1']])assert.ok(validOptions(p));
+ for(const p of [['FM1','FM1'],['X1','Y1']])assert.equal(validOptions(p),false);
 });
 test('external paper links reject script/data/insecure schemes',()=>{
  for(const u of ['javascript:alert(1)','data:text/html,bad','http://example.org','/local.pdf'])assert.equal(safeUrl(u),'');
